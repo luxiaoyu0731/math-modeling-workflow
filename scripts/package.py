@@ -9,7 +9,7 @@ import zipfile
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
-ALLOW=('README.md','VERSION','THIRD_PARTY_NOTICES.md','requirements-documents.txt','docs','prompts','skills','workflow','scripts','tests','.gitignore','.github')
+ALLOW=('README.md','LICENSE','CHANGELOG.md','VERSION','examples','THIRD_PARTY_NOTICES.md','requirements-documents.txt','docs','prompts','skills','workflow','scripts','tests','.gitignore','.github')
 DENY={'__pycache__','runs','state','.git','delivery','dist'}
 
 
@@ -53,7 +53,13 @@ def archive(output):
             info.external_attr=0o100644<<16;z.writestr(info,p.read_bytes())
         info=zipfile.ZipInfo('math-modeling-workflow/MANIFEST.json',date_time=(2020,1,1,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED
         z.writestr(info,json.dumps(manifest,sort_keys=True,indent=2)+'\n')
-    return {'files':len(manifest),'sha256':hashlib.sha256(output.read_bytes()).hexdigest()}
+    if __package__:
+        from .release_check import scan_zip
+    else:
+        from release_check import scan_zip
+    inspection=scan_zip(output)
+    if inspection['status']!='PASS':raise ValueError('archive requires release review; run release_check.py --zip on the retained archive')
+    return {'files':len(manifest),'sha256':hashlib.sha256(output.read_bytes()).hexdigest(),'release_scan':inspection['status']}
 
 
 def main():

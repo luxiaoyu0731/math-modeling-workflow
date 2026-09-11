@@ -1,0 +1,21 @@
+{
+  "schema": "mm-public-assets/v1",
+  "reviewer": "assistant visual reviewer",
+  "reviewed_at": "2026-09-11",
+  "assets": {
+    "readme-hero.png": {
+      "sha256": "db0d6fb1d37d158413bc00590a5abc466adab25ef9e4c3f423cfafda6a61c712",
+      "status": "passed",
+      "notes": "Actually viewed generated illustration. Generic teal bird and research objects; promotional artwork only, no real problem/data, personal identity or embedded identifying labels visible. Original generated PNG retained unchanged.",
+      "tool": "imagegen",
+      "purpose": "Public README illustration"
+    },
+    "readme-journey.png": {
+      "sha256": "27ee5c165f1bd6d70b4eaf4e615de7efa40e1aa77060a13e9c1391dba180df34",
+      "status": "passed",
+      "notes": "Actually viewed generated illustration. Generic teal bird and research objects; promotional artwork only, no real problem/data, personal identity or embedded identifying labels visible. Original generated PNG retained unchanged.",
+      "tool": "imagegen",
+      "purpose": "Public README illustration"
+    }
+  }
+}

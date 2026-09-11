@@ -18,6 +18,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = 'mm-authoring/v1'
+if __package__:
+    from . import contracts, native
+else:
+    import contracts, native
 
 
 def digest(path):
@@ -68,7 +72,7 @@ def init(root):
     root.mkdir(parents=True,exist_ok=True)
     path=root/'paper-plan.json'
     if path.exists():raise ValueError('refusing to overwrite paper-plan.json')
-    write(path,{'schema':SCHEMA,'title':'','language':'zh','profile':{'font':'','font_pt':12,'line_spacing':1.25,'margin_cm':2.5,'min_body_chars':0,'min_pages':0,'max_pages':0},
+    write(path,{'schema':SCHEMA,'title':'','language':'zh','profile':{'font':'','font_pt':12,'line_spacing':1.25,'margin_cm':2.5,'min_body_chars':0,'min_pages':0,'max_pages':0,'require_page_review':True},
                 'questions':[], 'sections':[], 'evidence':{}, 'claims':{}, 'figures':{}, 'references':{},
                 'notes':'Fill from the actual task. Zero page/length limits mean unspecified. No sample results are evidence.'})
     return {'created':'paper-plan.json'}
@@ -79,6 +83,9 @@ def audit(root, plan_path='paper-plan.json'):
     root=root.resolve(); path=local(root,plan_path); plan=read(path)
     errors=[];warnings=[];paths=[path];texts=[];used_figures=set();used_claims=set();used_refs=set()
     if not isinstance(plan,dict):raise ValueError('plan must be an object')
+    if plan.get('mode') not in (None,'generated','existing_tex'):raise ValueError('unsupported authoring mode')
+    if plan.get('mode')=='existing_tex':
+        return native.audit(root,plan,path,sys.modules[__name__])
     def require_file(name,sha=None):
         p=local(root,name)
         if not p.is_file():errors.append('missing file: '+name);return None
@@ -172,6 +179,7 @@ def audit(root, plan_path='paper-plan.json'):
             if len(norm)>=100:
                 if norm in paragraphs and paragraphs[norm]!=sid:errors.append('duplicate prose across sections: '+sid)
                 paragraphs[norm]=sid
+    extra,more=contracts.audit_contracts(root,plan,local,digest);errors+=extra;paths+=more
     return {'schema':'mm-authoring-audit/v1','status':'FAIL' if errors else 'PASS',
             'errors':errors,'warnings':warnings,'body_chars':body_chars,'inputs':snapshot(root,paths),
             'boundary':'Mechanical coverage and provenance checks do not certify mathematical correctness or human review.'}
@@ -200,17 +208,26 @@ def assemble(root, plan):
 def build(root, formats):
     report=audit(root)
     if report['status']!='PASS':raise ValueError('; '.join(report['errors']))
-    plan=read(root/'paper-plan.json'); text=assemble(root,plan)
+    plan=read(root/'paper-plan.json'); is_native=plan.get('mode')=='existing_tex'
+    if is_native and formats!=['latex']:raise ValueError('existing_tex supports latex only')
+    text=json.dumps(plan['native'],ensure_ascii=False,indent=2) if is_native else assemble(root,plan)
     out=root/'delivery';out.mkdir(exist_ok=True)
-    (out/'paper.md').write_text(text,encoding='utf-8')
-    outputs=[out/'paper.md'];details={}
+    assembled=out/('native-inputs.json' if is_native else 'paper.md')
+    assembled.write_text(text,encoding='utf-8')
+    outputs=[assembled];details={}
     # All assets are resolved against root, regardless of the output directory.
-    for fmt in formats:
+    for fmt in ([] if is_native else formats):
         if fmt=='docx':
-            from documents import make_docx
+            if __package__:
+                from .documents import make_docx
+            else:
+                from documents import make_docx
             details['docx']=make_docx(root,text,plan['profile'],out/'paper.docx');outputs.append(out/'paper.docx')
         elif fmt=='latex':
-            from documents import make_tex
+            if __package__:
+                from .documents import make_tex
+            else:
+                from documents import make_tex
             make_tex(root,text,plan['profile'],out/'paper.tex',plan.get('language','zh'));outputs.append(out/'paper.tex')
         else:raise ValueError('unknown format: '+fmt)
     # Record the exact code responsible for the build, including vendored formula conversion.
@@ -226,6 +243,17 @@ def render(root,fmt,engine=None):
     build_path=root/'delivery/build.json';build_record=read(build_path)
     errors=current(root,build_record['inputs'])+current(root,build_record['outputs'])+current(ROOT,build_record['tools'])
     if errors:raise ValueError('; '.join(errors))
+    plan=read(root/'paper-plan.json')
+    if plan.get('mode')=='existing_tex':
+        if fmt!='latex':raise ValueError('existing_tex supports latex only')
+        output=root/'delivery/paper-latex.pdf'
+        log=native.compile_pdf(root,plan,output,engine)
+        from pypdf import PdfReader
+        n=len(PdfReader(output).pages)
+        (root/'delivery/render-latex.log').write_text(log,encoding='utf-8')
+        result={'schema':'mm-render/v1','status':'RENDERED_REVIEW_REQUIRED','build_sha256':digest(build_path),'pdf':'delivery/paper-latex.pdf','pdf_sha256':digest(output),'pages':n,'format':'latex'}
+        write(root/'delivery/render-latex.json',result)
+        return result
     source=root/'delivery'/('paper.docx' if fmt=='docx' else 'paper.tex')
     if str(source.relative_to(root)) not in build_record['outputs']:raise ValueError('format was not built')
     binary=engine or shutil.which('soffice' if fmt=='docx' else 'xelatex')
@@ -294,6 +322,7 @@ def verify(root):
         if rv.get('status')!='PASS' or not rv.get('reviewer') or not rv.get('notes'):errors.append('visual review incomplete')
         if rv.get('pdfs')!=pdfs:errors.append('visual review is stale or incomplete')
         if rv.get('pages')!=pages:errors.append('visual review does not cover all rendered pages')
+        errors+=contracts.page_review(profile,rv,pages)
     return {'schema':'mm-delivery/v1','status':'FAIL' if errors else 'PASS','errors':errors,'pages':pages,
             'inputs':fresh['inputs'],'outputs':pdfs,
             'boundary':'PASS is a file/coverage check plus a recorded visual review, not proof of scientific correctness.'}

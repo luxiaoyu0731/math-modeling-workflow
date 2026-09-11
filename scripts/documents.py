@@ -52,7 +52,10 @@ def make_docx(root,text,profile,path):
     from docx.oxml import OxmlElement
     from docx.oxml.ns import qn
     from docx.enum.text import WD_ALIGN_PARAGRAPH
-    from vendor.formula_omml import inline_formula_tokens,latex_to_omml,display_omml
+    if __package__:
+        from .vendor.formula_omml import inline_formula_tokens,latex_to_omml,display_omml
+    else:
+        from vendor.formula_omml import inline_formula_tokens,latex_to_omml,display_omml
     document=Document();sec=document.sections[0]
     sec.page_width=Cm(21);sec.page_height=Cm(29.7)
     sec.top_margin=sec.bottom_margin=sec.left_margin=sec.right_margin=Cm(profile['margin_cm'])

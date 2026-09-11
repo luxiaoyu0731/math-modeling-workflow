@@ -64,3 +64,5 @@ verify重读数据、计划、章节、代码、输出及PDF，检查视觉记�
 这是一套明确支持子集的文档适配器，不是完整Markdown或LaTeX编译前端。未通过引用标记写出的普通数字仍需人工追踪；reference.source不是文献真实性证明；图形审核记录不能证明ImageGen真的调用过，需保留实际工具证据。输出不能替代数学审阅。
 
 无界面LibreOffice可能看不到桌面字体。指定实际可用的中文字体并检查渲染页面；若本机依赖Fontconfig，按环境配置FONTCONFIG_FILE，而不是只改字号或忽略缺字。标题文本核对失败时不会通过最终验收。
+
+已有 TeX 工程使用 [existing_tex](existing-project.md)；分层证据、分区页数及逐页验收见 [审核合同](review-contracts.md)。原 v1 接口兼容，新示例默认开启逐页审核。
