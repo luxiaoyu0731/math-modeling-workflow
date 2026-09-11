@@ -1,0 +1,4 @@
+claim_id,gate,claim_text_or_strong_term,evidence_level,direct_evidence,not_supported_by,required_action,code_or_proof_mapping,output_field,allowed_next_gate,status
+C-G1-01,G1,"[核心结论或强措辞]",direct|conditional|approximation|not_proven,"[题意/公式/实验]","[不能替代它的证据]","[证明、重跑、降级或删除]","[module:function or theorem]","[result field]",G2,template
+C-G3-01,G3,"[whole/exact/complete/robust/optimal/significant]",direct|conditional|approximation|not_proven,"[证明或针对该词的实验]","时间步稳定性、固定策略复算、有限预算搜索或示意图（除非直接相关）","未有对应证据时改为边界明确的表述","[formula/proof/code]","[result field]",G4,template
+C-G7-01,G7,"[摘要/正文/图表结论]",direct|conditional|approximation|not_proven,"[追踪矩阵行]","外部优秀案例、旧版本结果、生成式图片","删除、重跑或在正文标注边界","[trace id]","[source field]",G8,template

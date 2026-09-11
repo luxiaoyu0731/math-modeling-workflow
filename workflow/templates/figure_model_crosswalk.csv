@@ -1,0 +1,2 @@
+visual_id,figure_or_table_id,visual_role,requirement_id,model_object_type,object_boundary_or_relation,variable_or_formula_anchor,code_or_data_source,reader_question,supported_claim_id,unsupported_boundary,deterministic_generation,status
+"M-01","[fig/table]","model-object/formula-explanation","[R-*]","[geometry/network/time/etc.]","[objects/boundaries/relations]","[variables and optional F-*]","[path:function]","[what does this object relation mean?]","[claim_id]","[boundary]",yes,template

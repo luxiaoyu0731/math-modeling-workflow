@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.env
+.env.*
+!.env.example
+workflow/runs/
+workflow/state/
+inputs/
+outputs/
+private/
+*.zip

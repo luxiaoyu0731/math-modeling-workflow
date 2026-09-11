@@ -1,0 +1,2 @@
+requirement_id,题意依据,子问题,决策变量,约束,输出字段,模型或公式,代码函数,验证,论文位置,status
+R-G1-01,"[题意条款/页码]","Q[ ]","[变量]","[约束]","[交付字段]","[formula_id]","[module:function]","[test/result]","[section/table/figure]",template

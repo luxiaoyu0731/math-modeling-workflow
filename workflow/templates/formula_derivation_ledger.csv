@@ -1,0 +1,2 @@
+derivation_id,formula_id,问题来源,符号定义,前提或假设,推导步骤,使用的定理或引理,量纲检查,边界或退化检查,近似误差或适用范围,代码映射,测试映射,依赖公式,允许下一Gate,status
+D-G3-01,F-G3-01,"[requirement_id]","[symbols and units]","[assumptions]","[definition -> transformation -> result]","[theorem/lemma or not_applicable]","[pass/fail and rationale]","[cases]","[boundary]","[module:function]","[test:function/case]","[formula_id]",G4,template

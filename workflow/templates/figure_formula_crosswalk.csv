@@ -1,0 +1,2 @@
+visual_id,figure_or_table_id,requirement_id,formula_id,derivation_id,code_or_data_source,result_selector,reader_question,supported_claim_id,unsupported_boundary,deterministic_generation,status
+V-01,"[fig/table]","[R-*]","[F-*]","[D-*]","[path:function]","[field]","[question]","[claim_id]","[boundary]",yes,template

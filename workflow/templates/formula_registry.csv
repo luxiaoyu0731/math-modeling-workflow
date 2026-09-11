@@ -1,0 +1,9 @@
+formula_id,gate,formula_or_rule,purpose,assumptions_and_claim_boundary,code_mapping,depends_on,allowed_next_gate,status
+F-G1-01,G1,"x in D; y(t;x)=Phi(t,x;E,A)","锁定决策域和状态","固定变量时必须降级为条件分析","[module:function]","problem contract; variable/unit record",G2,template
+F-G3-01,G3,"I_p(t;x)=1{declared event condition}","定义事件谓词","条件、几何/统计近似与采样口径必须明确","[module:function]","G1 contract; G2 ledger",G4,template
+F-G3-02,G3,"D_p=int I_p dt; J=Aggregate(D_p)","定义效益和多对象聚合","并集、加权、最小值或总和不得混用","[module:function]","F-G3-01",G4,template
+F-G3-03,G3,"l(lambda)=a+lambda(b-a), lambda in [0,1]; I=1{exists lambda in [0,1]: l(lambda) in C}","有界线段/视线与干预区域的几何谓词（仅当适用）","必须区分直线、射线和线段；判别式或距离条件外还须验证参数域、退化情形与数值容差","[geometry:function]","problem contract; geometry assumptions",G4,template
+F-G3-04,G3,"I_union(t;x)=max_k I_k(t;x); D_union=int I_union dt","定义多个干预/事件的时间并集（仅当适用）","原始时长求和仅在可证明互不重叠时等价；同时作用、协同覆盖或交集口径必须另行定义","[aggregation:function]","F-G3-01; F-G3-02",G4,template
+F-G4-01,G4,"xhat in argmax J(x) s.t. H(x)<=0","定义求解与约束","有限预算搜索不是全局最优证书","[module:function]","F-G3-02; solver contract",G5,template
+F-G4-02,G4,"root search: f(t_L)f(t_R)<=0 and stated continuity/monotonicity on [t_L,t_R]","定义二分/端点搜索的适用前提（仅当适用）","布尔谓词为假不意味着已跨越边界；必须先定位连续真区间或可证明的括根区间","[boundary:function]","F-G3-01 or F-G3-03",G5,template
+F-G5-01,G5,"epsilon_t=|J_dt/2(xhat)-J_dt(xhat)|","验证时间离散稳定性","不替代空间、搜索或适用性验证","[validation:function]","final evaluator",G6,template
