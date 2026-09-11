@@ -21,3 +21,5 @@ python3 workflow/workflow.py register-artifact --state workflow/runs/my-project/
 修改已登记材料前，执行 `invalidate --state ... --artifact <id> --reason <原因>`，再重做、登记和验收相关下游材料。各命令完整参数见 `python3 workflow/workflow.py --help`。
 
 内核验证存在性、哈希、依赖和阶段顺序，不证明模型正确、引用可靠或图形真实。模板需实例化；不适用的检查应给出理由，不填伪造证据。
+
+新建v8运行在G7要求登记authoring_plan（实际paper-plan.json），G7实时运行内容审计，G8/G9实时运行交付验收。计划中的文件相对于计划所在目录。详见[论文交付](../docs/authoring.md)。历史v7状态不自动迁移。

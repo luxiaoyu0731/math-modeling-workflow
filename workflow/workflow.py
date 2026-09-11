@@ -12,6 +12,7 @@ import hashlib
 import json
 import re
 import shutil
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -26,7 +27,7 @@ REQUIRED_OUTPUT_IDS = {
     "G4": ["code_mapping", "solver_evidence_plan", "run_record"],
     "G5": ["validation_matrix"],
     "G6": ["visualization_blueprint", "figure_model_crosswalk", "figure_cards"],
-    "G7": ["paper_traceability", "reverse_outline", "citation_claim_map", "analysis_derivation_coverage", "ai_usage_ledger"],
+    "G7": ["authoring_plan", "paper_traceability", "reverse_outline", "citation_claim_map", "analysis_derivation_coverage", "ai_usage_ledger"],
     "G8": ["build_semantic_audit", "submission_manifest", "human_review_record"],
     "G9": ["retrospective"],
 }
@@ -201,7 +202,7 @@ def new_state(run_id: str, artifact_root: str) -> dict:
     gates = {gate: gate_record(gate) for gate in GATES}
     gates["G0"]["status"] = "active"
     return {
-        "schema": "mm-workflow/v7", "kind": "generic_math_modeling_control_plane",
+        "schema": "mm-workflow/v8", "paper_contract": True, "kind": "generic_math_modeling_control_plane",
         "run_id": run_id, "created_at": utc(), "artifact_root": artifact_root,
         "active_gate": "G0", "evidence_status": "not_usable", "approved_model_route": None,
         "accepted_result_ids": [], "paper_ready_claim_ids": [], "open_blockers": [],
@@ -276,6 +277,27 @@ def check_state(state_path: Path) -> dict:
     for item in state["gates"].values():
         blockers.extend(item.get("blocker", []))
     blockers = list(dict.fromkeys(blockers))
+    # New runs bind paper acceptance to a fresh content/build check, not a saved PASS.
+    if state.get("paper_contract") and gate in {"G7", "G8", "G9"}:
+        item = artifacts.get("authoring_plan")
+        if not item:
+            blockers.append("B-PAPER-CONTRACT: register an actual paper-plan.json before accepting paper stages")
+        else:
+            try:
+                package_root = Path(__file__).resolve().parents[1]
+                sys.path.insert(0, str(package_root))
+                try:
+                    from scripts.paper import audit, verify
+                finally:
+                    sys.path.pop(0)
+                plan_path = base / checked_relative(item["path"])
+                if plan_path.name != "paper-plan.json":
+                    raise ValueError("authoring plan must be named paper-plan.json")
+                paper_report = audit(plan_path.parent) if gate == "G7" else verify(plan_path.parent)
+                if paper_report["status"] != "PASS":
+                    blockers.extend("B-PAPER-CONTENT: " + issue for issue in paper_report["errors"])
+            except (OSError, ValueError, KeyError, TypeError, ImportError) as exc:
+                blockers.append("B-PAPER-CONTRACT: " + str(exc))
     if integrity:
         blockers.append("B-STATE-INTEGRITY: registered evidence or its dependencies changed; invalidate and repair before advancing.")
     prior_not_passed = [g for g in GATES[:GATES.index(gate)] if state["gates"][g]["status"] != "passed"]
@@ -452,7 +474,7 @@ def refresh_template_state() -> None:
     if state.get("run_id") != "active-template" or state.get("active_gate") != "G0" or has_outputs or state.get("open_blockers"):
         raise SystemExit("refusing to refresh a non-empty or progressed state; create a new run or migrate evidence explicitly")
     dump(path, new_state("active-template", "."))
-    print(json.dumps({"refreshed": str(path), "schema": "mm-workflow/v7", "active_gate": "G0"}, ensure_ascii=False))
+    print(json.dumps({"refreshed": str(path), "schema": "mm-workflow/v8", "active_gate": "G0"}, ensure_ascii=False))
 
 
 def new_run(args: argparse.Namespace) -> None:

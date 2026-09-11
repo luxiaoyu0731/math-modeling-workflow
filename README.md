@@ -2,14 +2,18 @@
 
 一套可阅读、可复用的数学建模到论文交付流程：问题分析 → 数据证据 → 模型推导 → 实际求解 → 验证 → ImageGen 制图 → 写作 → 成品检查。
 
-这里分享通用方法、提示词、skill 和轻量运行内核，不包含任何具体题目、数据、论文、计算结果或私人技能库快照。
+这里分享通用方法、提示词、skill 和轻量运行内核，不包含任何具体题目、真实数据、论文、计算结果或私人技能库快照。软件测试只使用明确标记的合成材料。
+
+当前版本：**0.2.0**。已补充项目安装器、章节证据检查、Word原生公式、LaTeX构建及PDF验收。
 
 ## 从这里开始
 
 1. 阅读 [工作流说明](docs/workflow.md)，理解各阶段如何交接。
 2. 把 [启动提示词](prompts/start.md) 发给你使用的助手，并提供自己的材料。
 3. 持续推进时使用 [续接提示词](prompts/continue.md)；只需修订时用 [审阅提示词](prompts/review.md)。
-4. 需要文件证据和阶段记录时，按 [内核用法](workflow/README.md) 创建独立运行。
+4. 需要客户端自动发现技能时，按 [安装说明](docs/install.md) 安装完整包。
+5. 需要完整论文生成与核验时，按 [论文交付说明](docs/authoring.md) 执行。
+6. 需要文件证据和阶段记录时，按 [内核用法](workflow/README.md) 创建独立运行。
 
 ## 内容导航
 
@@ -40,6 +44,9 @@ Skill 可以作为普通 Markdown 读取；若助手支持技能目录，可把 
 
 ```sh
 python3 -B -m unittest discover -s workflow/tests -v
+python3 -B -m unittest discover -s tests -v
 ```
 
 测试通过仅表示所覆盖的工作流行为通过检查，不保证任一论文正确或取得竞赛成绩。
+
+公式转换复用自 MathModel-Skill 的 MIT 模块，详见 [来源与许可](THIRD_PARTY_NOTICES.md)。实际验收记录见 [验证说明](docs/validation.md)。

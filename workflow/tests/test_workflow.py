@@ -28,7 +28,10 @@ class WorkflowTest(unittest.TestCase):
         self.state_path = self.base / 'runs/test/state/workflow_state.json'
         self.run_root = self.base / 'runs/test'
         self.run_root.mkdir(parents=True)
-        w.dump(self.state_path, w.new_state('test', 'runs/test'))
+        legacy = w.new_state('test', 'runs/test')
+        legacy.pop('paper_contract', None)  # Existing v7 runs retain their historical contract.
+        legacy['schema'] = 'mm-workflow/v7'
+        w.dump(self.state_path, legacy)
         self.capture = io.StringIO()
         self.redirect = contextlib.redirect_stdout(self.capture)
         self.redirect.__enter__()
