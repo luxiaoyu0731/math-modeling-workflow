@@ -14,3 +14,19 @@ private/
 dist/
 .math-modeling/
 delivery/
+
+# Local credentials, caches and temporary artifacts
+!.env*.example
+*.pem
+*.key
+*.p12
+*.pfx
+.pytest_cache/
+Thumbs.db
+*.log
+*.tmp
+*.bak
+node_modules/
+.venv/
+.cache/
+!.env*.example
