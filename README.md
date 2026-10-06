@@ -107,6 +107,8 @@ Word 使用 `docx` 格式与 LibreOffice；完整命令见 [快速开始](docs/q
 | [docs/](docs/) | 使用说明、审核合同、排障与发布准备 |
 | [tests/](tests/) | 交付和发布回归测试 |
 
+[2026-10-06 代码复核](docs/code-review.md)
+
 ## 我们已经检查了什么？
 
 当前核心、交付与发布测试共 **58 项，本地全部通过**；Word、生成式 LaTeX 与既有 TeX 的合成样张均实际构建并查看。README 插画与发布扫描的后续验证见 [验证记录](docs/validation.md)。
