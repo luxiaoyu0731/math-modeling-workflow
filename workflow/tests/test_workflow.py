@@ -173,10 +173,10 @@ class WorkflowTest(unittest.TestCase):
             w.new_run(argparse.Namespace(slug='new'))
 
     def test_path_traversal_rejected(self):
-        with self.assertRaises(SystemExit):
-            w.checked_relative('../outside')
-        with self.assertRaises(SystemExit):
-            w.checked_relative('/absolute')
+        for value in ('../outside', '/absolute', r'..\outside', r'C:\absolute', r'C:relative', r'\rooted'):
+            with self.subTest(value=value), self.assertRaises(SystemExit):
+                w.checked_relative(value)
+        self.assertEqual(w.checked_relative('reports/result.json'), Path('reports/result.json'))
 
     def test_legacy_state_requirements_not_migrated(self):
         s=self.state();s['schema']='mm-workflow/v6';s['gates']['G0']['required_output_ids']=['input_audit'];w.dump(self.state_path,s)

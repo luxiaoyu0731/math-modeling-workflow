@@ -14,7 +14,7 @@ import re
 import shutil
 import sys
 from datetime import datetime, timezone
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 
 ROOT = Path(__file__).resolve().parent
 GATES = [f"G{i}" for i in range(10)]
@@ -143,7 +143,7 @@ def split_csv(value: str) -> list[str]:
 
 def checked_relative(value: str) -> Path:
     path = Path(value)
-    if path.is_absolute() or ".." in path.parts:
+    if any(p.anchor or ".." in p.parts for p in (PurePosixPath(value), PureWindowsPath(value))):
         raise SystemExit("artifact paths must be relative to the declared run root and may not contain '..'")
     return path
 
