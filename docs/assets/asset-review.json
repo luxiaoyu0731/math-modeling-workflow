@@ -1,7 +1,7 @@
 {
   "schema": "mm-public-assets/v1",
   "reviewer": "assistant visual reviewer",
-  "reviewed_at": "2026-09-11",
+  "reviewed_at": "2026-10-07",
   "assets": {
     "readme-hero.png": {
       "sha256": "db0d6fb1d37d158413bc00590a5abc466adab25ef9e4c3f423cfafda6a61c712",
@@ -16,6 +16,12 @@
       "notes": "Actually viewed generated illustration. Generic teal bird and research objects; promotional artwork only, no real problem/data, personal identity or embedded identifying labels visible. Original generated PNG retained unchanged.",
       "tool": "imagegen",
       "purpose": "Public README illustration"
+    },
+    "walkthrough.gif": {
+      "sha256": "82fde11e714973ead635d5965bd04e9701385a483a79d54b71e731ac064dff38",
+      "status": "passed",
+      "notes": "Viewed sampled frames of actual offline command output recording. Synthetic sample only, local path anonymized, no model calls or confidential documents.",
+      "purpose": "Public first-use walkthrough"
     }
   }
 }

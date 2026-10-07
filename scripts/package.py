@@ -9,7 +9,7 @@ import zipfile
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
-ALLOW=('README.md','LICENSE','CHANGELOG.md','VERSION','examples','THIRD_PARTY_NOTICES.md','requirements-documents.txt','docs','prompts','skills','workflow','scripts','tests','.gitignore','.github')
+ALLOW=('README.en.md','README.md','LICENSE','CHANGELOG.md','VERSION','examples','THIRD_PARTY_NOTICES.md','requirements-documents.txt','docs','prompts','skills','workflow','scripts','tests','.gitignore','.github')
 DENY={'__pycache__','runs','state','.git','delivery','dist'}
 
 

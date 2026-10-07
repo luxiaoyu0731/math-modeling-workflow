@@ -1,10 +1,16 @@
 # 🐦 数学建模工作流
 
+[English](README.en.md)
+
 把读题、推导、计算、制图与论文审阅连成可续接的工作流。
 
 ![数学建模工作台概念插画](docs/assets/readme-hero.png)
 
 Python 3.10+ · 9 个 skills · Word / LaTeX · MIT
+
+![Recorded walkthrough](docs/assets/walkthrough.gif)
+
+演示说明：真实合成示例创建、audit 和 LaTeX 构建命令输出；不使用真实比赛数据或论文。
 
 ## 从这里开始
 
