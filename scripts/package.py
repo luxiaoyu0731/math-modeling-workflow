@@ -45,11 +45,11 @@ def install(target,platform):
 
 def archive(output):
     if output.exists():raise ValueError('refusing to overwrite archive')
-    manifest={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sources()}
+    manifest={p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in sources()}
     output.parent.mkdir(parents=True,exist_ok=True)
     with zipfile.ZipFile(output,'w',compression=zipfile.ZIP_DEFLATED) as z:
         for p in sources():
-            info=zipfile.ZipInfo('math-modeling-workflow/'+str(p.relative_to(ROOT)),date_time=(2020,1,1,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED
+            info=zipfile.ZipInfo('math-modeling-workflow/'+p.relative_to(ROOT).as_posix(),date_time=(2020,1,1,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED
             info.external_attr=0o100644<<16;z.writestr(info,p.read_bytes())
         info=zipfile.ZipInfo('math-modeling-workflow/MANIFEST.json',date_time=(2020,1,1,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED
         z.writestr(info,json.dumps(manifest,sort_keys=True,indent=2)+'\n')

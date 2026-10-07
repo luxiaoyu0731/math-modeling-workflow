@@ -200,7 +200,7 @@ def assemble(root, plan):
             return f"![{item['caption']}]({item['path']})"
         text=re.sub(r'\[\[figure:([\w-]+)\]\]',figure,text)
         parts.append(text.strip())
-    used=set(re.findall(r'\[\[cite:([\w-]+)\]\]','\n'.join(local(root,s['path']).read_text() for s in plan['sections'])))
+    used=set(re.findall(r'\[\[cite:([\w-]+)\]\]','\n'.join(local(root,s['path']).read_text(encoding='utf-8') for s in plan['sections'])))
     if used:parts.append('## '+('参考文献' if plan.get('language')=='zh' else 'References')+'\n\n'+'\n\n'.join(f'[{refs.index(r)+1}] '+plan['references'][r]['text'] for r in refs if r in used))
     return '\n\n'.join(parts)+'\n'
 

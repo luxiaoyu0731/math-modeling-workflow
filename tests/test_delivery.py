@@ -73,7 +73,7 @@ class AuthoringTests(unittest.TestCase):
         self.assertEqual(paper.audit(self.root)['status'],'FAIL')
     def test_repeat_prose_rejected(self):
         para='本段文字用于检查重复内容是否能够在实际正文里被发现。'*10
-        (self.root/'section.md').write_text(para+'\n\n'+para)
+        (self.root/'section.md').write_text(para+'\n\n'+para,encoding='utf-8')
         self.assertEqual(paper.audit(self.root)['status'],'FAIL')
     def test_tex_build_and_staleness(self):
         r=paper.build(self.root,['latex'])
