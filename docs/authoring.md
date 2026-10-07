@@ -3,7 +3,7 @@
 运行内核和内容审计仅依赖Python标准库。Word/PDF适配器使用已同意的可选依赖，用户按需安装：
 
 ```sh
-python3 -m pip install -r requirements-documents.txt
+python3 -m pip install -r docs/requirements.txt
 python3 scripts/paper.py doctor
 ```
 

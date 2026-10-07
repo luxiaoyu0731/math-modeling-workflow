@@ -12,7 +12,7 @@ python3 scripts/paper.py --project /tmp/mm-demo render --format latex
 python3 scripts/paper.py --project /tmp/mm-demo verify
 ```
 
-Windows 把 `/tmp/mm-demo` 换成自己的新目录。构建 TeX 不需要文档依赖；实际渲染需要 XeLaTeX 及 requirements-documents.txt 中的 PDF 依赖。先运行 `python3 scripts/paper.py doctor`。需要 Word 时将 build 的格式换成 docx；render 也换成 docx，并准备 LibreOffice。
+Windows 把 `/tmp/mm-demo` 换成自己的新目录。构建 TeX 不需要文档依赖；实际渲染需要 XeLaTeX 及 docs/requirements.txt 中的 PDF 依赖。先运行 `python3 scripts/paper.py doctor`。需要 Word 时将 build 的格式换成 docx；render 也换成 docx，并准备 LibreOffice。
 
 预期：audit 返回 PASS，build 返回 BUILT_REVIEW_REQUIRED，render 产生 PDF；**最后 verify 应因尚未视觉审核而失败**。这表示检查在正常工作。打开实际 PDF 查看每一页，再按 [审核合同](review-contracts.md) 写入记录，不能直接复制测试里的虚构审核数据。
 
