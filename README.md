@@ -2,11 +2,15 @@
 
 [English](README.en.md)
 
-把读题、推导、计算、制图与论文审阅连成可续接的工作流。
+给使用 AI 辅助建模与写作的参赛者：组织推导、计算和论文证据，生成 Word / LaTeX，并检查结论与成品是否一致。
 
 ![数学建模工作台概念插画](docs/assets/readme-hero.png)
 
 Python 3.10+ · 9 个 skills · Word / LaTeX · MIT
+
+[直接查看生成的示例 PDF](docs/assets/sample-paper.pdf)
+
+<img src="docs/assets/sample-paper.png" alt="Synthetic sample PDF; arithmetic fixture only" width="500" />
 
 ![Recorded walkthrough](docs/assets/walkthrough.gif)
 
@@ -37,7 +41,7 @@ Python 3.10+ · 9 个 skills · Word / LaTeX · MIT
 ## 跑一个合成示例
 
 ```sh
-python3 examples/create_demo.py --destination ../mm-demo
+python3 examples/create_showcase.py --destination ../mm-demo
 python3 scripts/paper.py --project ../mm-demo audit
 python3 scripts/paper.py --project ../mm-demo build --formats latex
 ```
@@ -63,3 +67,5 @@ python3 -B -m unittest discover -s tests -v
 </details>
 
 [MIT License](LICENSE)
+
+[遇到问题](https://github.com/luxiaoyu0731/math-modeling-workflow/issues/new?template=bug_report.yml) · [告诉我们哪一步不清楚](https://github.com/luxiaoyu0731/math-modeling-workflow/issues/new?template=first_use.yml) · [从小任务参与](CONTRIBUTING.md)

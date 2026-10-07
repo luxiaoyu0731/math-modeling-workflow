@@ -8,6 +8,10 @@ A resumable AI-assisted workflow from problem analysis and derivation to computa
 
 Python 3.10+ · 9 skills · Word / LaTeX · MIT
 
+[View the generated sample PDF](docs/assets/sample-paper.pdf)
+
+<img src="docs/assets/sample-paper.png" alt="Synthetic sample PDF; arithmetic fixture only" width="500" />
+
 ![Recorded walkthrough](docs/assets/walkthrough.gif)
 
 Recorded actual synthetic example creation, audit and LaTeX build output.
@@ -32,7 +36,7 @@ Stage contracts preserve requirements, notation and execution evidence. Chapters
 ```sh
 git clone https://github.com/luxiaoyu0731/math-modeling-workflow.git
 cd math-modeling-workflow
-python3 examples/create_demo.py --destination ../mm-demo
+python3 examples/create_showcase.py --destination ../mm-demo
 python3 scripts/paper.py --project ../mm-demo audit
 python3 scripts/paper.py --project ../mm-demo build --formats latex
 ```
@@ -51,3 +55,5 @@ python3 -B -m unittest discover -s tests -v
 </details>
 
 [MIT](LICENSE). Image generation is provided by the user's assistant environment; the repository itself does not purchase model calls.
+
+[Report a bug](https://github.com/luxiaoyu0731/math-modeling-workflow/issues/new?template=bug_report.yml) · [First-use feedback](https://github.com/luxiaoyu0731/math-modeling-workflow/issues/new?template=first_use.yml) · [Starter tasks](CONTRIBUTING.md)

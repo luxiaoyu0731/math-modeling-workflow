@@ -22,6 +22,18 @@
       "status": "passed",
       "notes": "Viewed sampled frames of actual offline command output recording. Synthetic sample only, local path anonymized, no model calls or confidential documents.",
       "purpose": "Public first-use walkthrough"
+    },
+    "sample-paper.pdf": {
+      "sha256": "847d6e7fe930dc039cdf7226d284236c8612dd6ca9e8b0688f5daaf8c1176995",
+      "status": "passed",
+      "notes": "Viewed the complete one-page rendered PDF: self-authored synthetic linear series, manually authored explanation, computed JSON-bound MAE. No private data or research claims; legible formula and table.",
+      "purpose": "Public workflow result example"
+    },
+    "sample-paper.png": {
+      "sha256": "b31b3a6ea5f704feb61d713cd09124326fb9bffb867865898b3ca433b27e1b66",
+      "status": "passed",
+      "notes": "Viewed the complete one-page rendered PDF: self-authored synthetic linear series, manually authored explanation, computed JSON-bound MAE. No private data or research claims; legible formula and table.",
+      "purpose": "Public workflow result example"
     }
   }
 }

@@ -12,3 +12,5 @@ asset-review.json 记录实际查看后的图像哈希。扫描器只能确认�
 ## Recorded walkthrough
 
 `walkthrough.gif`：真实合成示例创建、audit 和 LaTeX 构建命令输出；不使用真实比赛数据或论文。 录制于 2026-10-07。非 ImageGen 图片，无第三方私有材料。
+
+`sample-paper.pdf` and its preview are built by `examples/create_showcase.py` and the repository authoring/render pipeline. The constructed linear sequence and computed errors are software fixtures, not research evidence. No external paper is distributed.

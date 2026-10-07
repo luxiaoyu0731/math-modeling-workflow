@@ -1,0 +1,53 @@
+{
+  "name": "使用问题 / Bug report",
+  "description": "报告可复现的问题，帮助定位首次使用阻碍",
+  "title": "[Bug] ",
+  "body": [
+    {
+      "type": "markdown",
+      "attributes": {
+        "value": "请勿上传密钥、私人论文或未公开比赛资料。Please redact private data. 不要在公开 Issue 发布漏洞利用细节；先请求私下联系。"
+      }
+    },
+    {
+      "type": "input",
+      "id": "environment",
+      "attributes": {
+        "label": "运行环境 / Environment",
+        "description": "系统、版本号或提交、使用的启动命令"
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "steps",
+      "attributes": {
+        "label": "复现步骤 / Steps",
+        "description": "尽量使用仓库自带合成样例"
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "result",
+      "attributes": {
+        "label": "预期与实际 / Expected and actual",
+        "description": "在哪里停住、报错或结果不清楚？"
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "evidence",
+      "attributes": {
+        "label": "脱敏日志或截图 / Redacted evidence"
+      }
+    }
+  ]
+}
