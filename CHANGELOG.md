@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add tested source release preparation with version validation and integrity manifest.
+
 ## 0.3.0
 
 - 图文 README：ImageGen 双幅插画、场景入口和可复制的使用步骤；公开图片以实际查看记录绑定精确哈希。

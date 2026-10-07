@@ -57,3 +57,5 @@ python3 -B -m unittest discover -s tests -v
 [MIT](LICENSE). Image generation is provided by the user's assistant environment; the repository itself does not purchase model calls.
 
 [Report a bug](https://github.com/luxiaoyu0731/math-modeling-workflow/issues/new?template=bug_report.yml) · [First-use feedback](https://github.com/luxiaoyu0731/math-modeling-workflow/issues/new?template=first_use.yml) · [Starter tasks](CONTRIBUTING.md)
+
+[Versioned releases and artifact verification](docs/releasing.md)

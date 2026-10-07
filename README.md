@@ -69,3 +69,5 @@ python3 -B -m unittest discover -s tests -v
 [MIT License](LICENSE)
 
 [遇到问题](https://github.com/luxiaoyu0731/math-modeling-workflow/issues/new?template=bug_report.yml) · [告诉我们哪一步不清楚](https://github.com/luxiaoyu0731/math-modeling-workflow/issues/new?template=first_use.yml) · [从小任务参与](CONTRIBUTING.md)
+
+[Versioned releases and artifact verification](docs/releasing.md)
